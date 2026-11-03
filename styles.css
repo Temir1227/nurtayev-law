@@ -26,6 +26,7 @@
   --placeholder: #7d8a9b;
   --err: #a63a23;
   --mark-bg: #0d1d36;
+  --bird: #16325c;
   --mark-fg: #e3efe8;
   --map-ink: 13,29,54;
   --map-accent: 23,104,74;
@@ -49,7 +50,7 @@
   --green: #56c596; --green-hi: #74d6ab; --on-green: #062218;
   --glass: rgba(10, 18, 32, 0.9); --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 16px -8px rgba(0,0,0,.4);
   --photo-fb: linear-gradient(160deg, #15263a 0%, #12302a 55%, #0f1a2b 100%);
-  --placeholder: #7f8ea0; --err: #f2a48f; --mark-bg: #e9eff3; --mark-fg: #0a1220;
+  --placeholder: #7f8ea0; --err: #f2a48f; --mark-bg: #e9eff3; --bird: #dfe8f1; --mark-fg: #0a1220;
   --map-ink: 233,239,243; --map-accent: 86,197,150; --map-bg: #111c2d;
   color-scheme: dark;
 }
@@ -728,3 +729,10 @@ mark { background: color-mix(in oklab, var(--green) 22%, transparent); color: in
 .oc-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--green); flex: none; box-shadow: 0 0 0 0 color-mix(in oklab, var(--green) 45%, transparent); animation: ping 2.4s var(--ease-out) infinite; }
 @keyframes ping { 70% { box-shadow: 0 0 0 10px transparent; } 100% { box-shadow: 0 0 0 0 transparent; } }
 @media (max-width: 760px) { .office-photo { aspect-ratio: 4 / 3.2; } }
+
+/* Bird logo */
+.brand-mark { width: 44px; height: 44px; }
+.brand-mark .bird { fill: var(--bird); transition: fill 420ms ease; }
+.brand:hover .brand-mark { transform: translateY(-1px) rotate(-3deg); }
+.brand-mark { transition: transform 500ms var(--ease-out); }
+@media (max-width: 760px) { .brand-mark { width: 36px; height: 36px; } }
