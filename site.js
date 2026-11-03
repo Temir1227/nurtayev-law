@@ -113,7 +113,7 @@
   /* Scroll-linked scenes (each only when present on the page) */
   const header = $('.site-header'), bar = $('#actionbar'), contact = $('#contact');
   const heroImg = $('#hero-photo img');
-  const city = $('#city'), cityFrame = $('#city-frame'), cityCopy = $('#city-copy');
+  const city = $('#city'), cityImg = $('#city-frame img');
   const cta = $('#cta-card'), ctaImg = $('#cta-card img');
   const track = $('#proc-track');
   const railItems = rail ? [...rail.querySelectorAll('li')] : [];
@@ -144,11 +144,10 @@
 
     if (city) {
       const c = city.getBoundingClientRect();
-      const cp = clamp((vh * 0.35 - c.top) / (c.height - vh * 0.65));
-      const open = clamp(cp * 1.5);
-      cityFrame.style.setProperty('--c', open.toFixed(3));
-      cityCopy.style.opacity = clamp(open * 2 - 1).toFixed(3);
-      cityCopy.style.transform = `translateY(${((1 - clamp(open * 2 - 1)) * 24).toFixed(1)}px)`;
+      if (c.bottom > 0 && c.top < vh) {
+        const p = clamp((vh - c.top) / (vh + c.height));
+        cityImg.style.transform = `translateY(${((p - 0.5) * -8).toFixed(2)}%) scale(${(1.16 - p * 0.12).toFixed(4)})`;
+      }
     }
 
     if (cta) {

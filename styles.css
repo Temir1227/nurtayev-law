@@ -747,3 +747,30 @@ mark { background: color-mix(in oklab, var(--green) 22%, transparent); color: in
   .cta-copy { max-width: 100%; }
   .cta-copy .btn { width: 100%; }
 }
+
+/* City band v2: a full-bleed photo section that drifts as you scroll */
+.city { height: auto; }
+.city-stage { position: relative; top: 0; height: clamp(520px, 86vh, 820px); display: flex; align-items: flex-end; overflow: hidden; }
+.city-frame { clip-path: none; }
+.city-frame img { transform: scale(1.12); transform-origin: 50% 50%; will-change: transform; }
+.city-frame::after { background: linear-gradient(180deg, rgba(10,18,32,.05) 0%, rgba(10,18,32,.1) 35%, rgba(10,18,32,.78) 100%); }
+.city-copy { position: relative; opacity: 1; padding-bottom: clamp(40px, 7vw, 88px); }
+.city-copy h2 { font-size: clamp(36px, 5.6vw, 76px); max-width: 15ch; }
+.city + .cta, .city ~ .cta { padding-top: clamp(80px, 10vw, 128px); }
+
+/* Contact hero: balanced two columns with the office photo */
+.page-hero { padding-block: clamp(32px, 5vw, 64px) clamp(28px, 4vw, 48px); }
+.page-hero.has-photo .ph-grid { grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); }
+.page-hero .office-photo { aspect-ratio: 4 / 3.3; }
+.contact-page { padding-top: clamp(24px, 4vw, 48px); }
+@media (max-width: 760px) {
+  .city-stage { height: 78vh; min-height: 480px; }
+  .city-copy h2 { font-size: 34px; }
+  .page-hero .office-photo { aspect-ratio: 4 / 3.4; }
+}
+.city-copy .kicker { color: #d6f0e1; text-shadow: 0 1px 12px rgba(0,0,0,.35); }
+.city-copy h2, .city-copy p { text-shadow: 0 2px 24px rgba(0,0,0,.25); }
+@media (max-width: 760px) {
+  .page-hero.has-photo .ph-grid { grid-template-columns: 1fr; }
+  .page-hero .office-photo figcaption { left: 10px; right: 10px; bottom: 10px; padding: 10px 12px; }
+}
