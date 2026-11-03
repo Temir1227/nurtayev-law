@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Contact | Nurtayev Law</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Book a consultation with Nurtayev Law at 136 Madison Avenue, Office 617, New York, NY 10016. office@nurtayevlaw.com. English, Russian, Kazakh.">
+<meta property="og:title" content="Contact | Nurtayev Law">
+<meta property="og:description" content="Book a consultation with Nurtayev Law at 136 Madison Avenue, Office 617, New York, NY 10016. office@nurtayevlaw.com. English, Russian, Kazakh.">
+<meta property="og:image" content="img/liberty-sky.jpg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'%3E%3Crect width='36' height='36' rx='9' fill='%230d1d36'/%3E%3Cpath d='M11 25V11l14 14V11' fill='none' stroke='%23e3efe8' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='25' cy='11' r='2.6' fill='%233fb183'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="site-header" id="top">
+  <div class="wrap nav">
+    <a class="brand" href="index.html" aria-label="Nurtayev Law, home"><svg class="brand-mark" viewBox="0 0 36 36" aria-hidden="true"><rect width="36" height="36" rx="9" fill="#0d1d36"/><path d="M11 25V11l14 14V11" fill="none" stroke="#e3efe8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="25" cy="11" r="2.6" fill="#3fb183"/></svg><span><span class="brand-name">Nurtayev Law</span><span class="brand-sub">Immigration law</span></span></a>
+    <ul class="nav-links"><li><a href="about.html">About</a></li><li><a href="practice.html">Practice areas</a></li><li><a href="practice.html#process">How it works</a></li><li><a href="contact.html#faq">FAQ</a></li><li><a href="contact.html" aria-current="page">Contact</a></li></ul>
+    <div class="nav-cta">
+      <a class="nav-phone" href="tel:+12120000000">(212) <span class="ph">XXX-XXXX</span></a>
+      <a class="btn btn-primary" href="contact.html">Book a consultation</a>
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu"><span></span></button>
+    </div>
+  </div>
+  <nav class="wrap mobile-menu" id="mobile-menu" aria-label="Mobile"><a href="index.html">Home</a><a href="about.html">About</a><a href="practice.html">Practice areas</a><a href="practice.html#process">How it works</a><a href="contact.html#faq">FAQ</a><a href="contact.html" aria-current="page">Contact</a><a class="btn btn-primary" href="contact.html">Book a consultation</a></nav>
+</header>
+<main>
+<section class="page-hero" aria-labelledby="ch-title">
+    <div class="wrap inner">
+      <p class="crumbs fade-in"><a href="index.html">Home</a><span aria-hidden="true">/</span><span>Contact</span></p>
+      <h1 id="ch-title" data-split>Tell us a little. <span class="soft">We will call you back.</span></h1>
+      <p class="lede fade-in" style="animation-delay:600ms">Meet at our Madison Avenue office, or by phone or video from anywhere. We speak English, Russian, and Kazakh.</p>
+    </div>
+  </section>
+<section class="contact contact-page" id="contact" aria-label="Contact details and form">
+    <div class="wrap contact-grid">
+      <div class="office rv">
+                <div class="boroughs">
+          <canvas id="boroughs" aria-hidden="true"></canvas>
+          <p class="map-cap" style="left:auto;text-align:right"><span>From every borough to our Manhattan office</span></p>
+        </div>
+        <dl>
+          <div class="wide"><dt>Call</dt><dd><a class="phone-big" href="tel:+12120000000">(212) <span class="ph">XXX-XXXX</span></a></dd></div>
+          <div><dt>Office</dt><dd>136 Madison Avenue, Office 617<br>New York, NY 10016</dd></div>
+          <div><dt>Hours</dt><dd><span class="ph">[Mon to Fri, 9 am to 6 pm]</span></dd></div>
+          <div class="wide"><dt>Email</dt><dd><a href="mailto:office@nurtayevlaw.com" style="text-decoration:none">office@nurtayevlaw.com</a></dd></div>
+        </dl>
+      </div>
+
+      <form class="consult rv rv-d1" id="consult" name="consultation" method="POST" data-netlify="true" netlify-honeypot="company" novalidate>
+        <input type="hidden" name="form-name" value="consultation">
+        <p hidden><label>Leave empty <input name="company"></label></p>
+        <div class="row2">
+          <div class="field"><label for="f-name">Full name</label><input id="f-name" name="name" autocomplete="name" required placeholder="Your name"><span class="err" hidden>Please enter your name.</span></div>
+          <div class="field"><label for="f-phone">Phone</label><input id="f-phone" name="phone" type="tel" autocomplete="tel" required placeholder="(212) 555-0100"><span class="err" hidden>Please enter a phone number we can call.</span></div>
+        </div>
+        <div class="row2">
+          <div class="field"><label for="f-email">Email (optional)</label><input id="f-email" name="email" type="email" autocomplete="email" placeholder="you@email.com"></div>
+          <div class="field"><label for="f-lang">Preferred language</label><select id="f-lang" name="lang"><option>English</option><option>Русский (Russian)</option><option>Қазақша (Kazakh)</option><option>Other (tell us below)</option></select></div>
+        </div>
+        <div class="field"><label for="f-topic">What can we help with?</label>
+          <select id="f-topic" name="topic"><option>Family or green card</option><option>Citizenship</option><option>Work visa</option><option>Deportation or court date</option><option>Asylum</option><option>DACA or TPS</option><option>Waiver</option><option>Not sure yet</option></select></div>
+        <fieldset class="field">
+          <legend>Best way to reach you</legend>
+          <div class="pills">
+            <label><input type="radio" name="via" id="via-call" value="call" checked><span>Phone call</span></label>
+            <label><input type="radio" name="via" id="via-text" value="text"><span>Text message</span></label>
+            <label><input type="radio" name="via" id="via-email" value="email"><span>Email</span></label>
+          </div>
+        </fieldset>
+        <div class="field"><label for="f-msg">Anything we should know? (optional)</label><textarea id="f-msg" name="msg" placeholder="A sentence or two is enough. Please do not include sensitive details."></textarea></div>
+        <button class="btn btn-primary" type="submit">Request a consultation <span class="arrow" aria-hidden="true">&rarr;</span></button>
+        <p class="fine">Sending this form does not create an attorney-client relationship. Please do not include confidential information. We will contact you to schedule a consultation.</p>
+      </form>
+    </div>
+  </section>
+<section class="faq faq-wide" id="faq" aria-labelledby="faq-title">
+    <div class="wrap faq-grid">
+      <div>
+        <div class="sec-head rv">
+          <p class="kicker">Questions</p>
+          <h2 id="faq-title">Answers to common questions.</h2>
+        </div>
+        <div class="faq-list rv">
+          <details><summary>Do I have to come to the office? <span class="plus" aria-hidden="true"></span></summary>
+            <p class="ans">No. You can meet with us at 136 Madison Avenue, or by phone or video from anywhere. Immigration law is federal, so we can help clients across the United States.</p></details>
+          <details><summary>How long will my case take? <span class="plus" aria-hidden="true"></span></summary>
+            <p class="ans">It depends on the type of case and the office handling it. USCIS publishes current processing times on its website, and we will give you a realistic estimate for your situation at your consultation.</p></details>
+          <details><summary>I have a court date. Is it too late to hire a lawyer? <span class="plus" aria-hidden="true"></span></summary>
+            <p class="ans">No. Contact us as soon as possible and bring your Notice to Appear and any papers from the court. Never miss a hearing, even if you do not have a lawyer yet.</p></details>
+          <details><summary>Is what I tell you confidential? <span class="plus" aria-hidden="true"></span></summary>
+            <p class="ans">Conversations with your attorney for the purpose of getting legal advice are protected. Please do not send sensitive details through the website form; we will discuss them privately at your consultation.</p></details>
+          <details><summary>What languages do you speak? <span class="plus" aria-hidden="true"></span></summary>
+            <p class="ans">We work with clients in English, Russian (Русский), and Kazakh (Қазақша). If you speak another language, tell us when you book and we will arrange an interpreter.</p></details>
+        </div>
+      </div>
+      <figure class="photo faq-photo rv rv-d1">
+        <img src="img/liberty-crown.jpg" alt="Close-up of the Statue of Liberty's crown" loading="lazy" data-photo>
+        <span class="alt-note">Liberty's crown</span>
+      </figure>
+    </div>
+  </section>
+</main>
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <a class="brand" href="index.html" aria-label="Nurtayev Law, home"><svg class="brand-mark" viewBox="0 0 36 36" aria-hidden="true"><rect width="36" height="36" rx="9" fill="#0d1d36"/><path d="M11 25V11l14 14V11" fill="none" stroke="#e3efe8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="25" cy="11" r="2.6" fill="#3fb183"/></svg><span><span class="brand-name">Nurtayev Law</span><span class="brand-sub">Immigration law</span></span></a>
+        <p style="margin-top:16px; max-width:36ch">Immigration counsel for families, workers, and students. English, Русский, Қазақша.</p>
+      </div>
+      <div class="foot-office"><h4>New York office</h4>
+        <address>136 Madison Avenue, Office 617<br>New York, NY 10016</address>
+        <p class="ph-line">(212) <span class="ph">XXX-XXXX</span><br><a href="mailto:office@nurtayevlaw.com">office@nurtayevlaw.com</a></p></div>
+      <div><h4>Explore</h4><ul><li><a href="about.html">About Daniyar Nurtayev</a></li><li><a href="practice.html">Practice areas</a></li><li><a href="practice.html#process">How it works</a></li><li><a href="contact.html#faq">FAQ</a></li><li><a href="contact.html">Book a consultation</a></li></ul></div>
+    </div>
+    <div class="legal">
+      <p><strong>Attorney Advertising.</strong> Prior results do not guarantee a similar outcome.</p>
+      <p>The information on this website is general and is not legal advice. Contacting Nurtayev Law through this site does not create an attorney-client relationship. Daniyar Nurtayev is admitted to practice law in New York.</p>
+      <p>New York photography: Anthony Delanoix, Erik Lindgren, and Jonathan Riley, via Wikimedia Commons (CC0).</p>
+      <p>&copy; <span class="yr">2026</span> Nurtayev Law. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+<div class="actionbar" id="actionbar">
+  <a class="btn btn-ghost" href="tel:+12120000000">Call</a>
+  <a class="btn btn-primary" href="contact.html">Book a consultation</a>
+</div>
+<script src="site.js"></script>
+</body>
+</html>
