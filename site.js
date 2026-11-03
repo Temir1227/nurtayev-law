@@ -5,6 +5,51 @@
   const $$ = (s) => [...document.querySelectorAll(s)];
   const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
   $$('.yr').forEach((el) => { el.textContent = new Date().getFullYear(); });
+  const RU = (root.lang || '').startsWith('ru');
+  const T = RU ? {
+    path: 'Обычный путь дела', pathAria: 'Обычный путь: ', then: ', затем ',
+    sending: 'Отправка...', thanks: (n) => `Спасибо, ${n}.`,
+    received: 'Заявка получена', receivedBody: 'Мы перезвоним в течение одного рабочего дня. Если вопрос срочный, позвоните в офис.',
+    preview: 'Предпросмотр', previewBody: 'Эта версия сайта пока не отправляет сообщения. Позвоните в офис по номеру (609) 608-8808 или напишите на office@nurtayevlaw.com.',
+    showing: (n, t) => n === t ? `Все ${t} услуг` : `Найдено: ${n} из ${t}`, more: (n) => `Показать все ${n}`, less: 'Свернуть',
+    toDark: 'Включить тёмную тему', toLight: 'Включить светлую тему'
+  } : {
+    path: 'Typical path', pathAria: 'Typical path: ', then: ', then ',
+    sending: 'Sending...', thanks: (n) => `Thank you, ${n}.`,
+    received: 'Request received', receivedBody: 'We will call you back within one business day. If your matter is urgent, please call the office.',
+    preview: 'Preview', previewBody: 'This preview of the site cannot send messages yet. Please call the office at (609) 608-8808 or email office@nurtayevlaw.com.',
+    showing: (n, t) => n === t ? `All ${t} services` : `Showing ${n} of ${t} services`, more: (n) => `Show all ${n}`, less: 'Show less',
+    toDark: 'Switch to dark mode', toLight: 'Switch to light mode'
+  };
+
+  /* Light / dark mode */
+  const isDark = () => root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+  const labelTheme = () => $$('.theme-btn').forEach((b) => { b.setAttribute('aria-label', isDark() ? T.toLight : T.toDark); b.setAttribute('aria-pressed', isDark()); });
+  labelTheme();
+  $$('.theme-btn').forEach((b) => b.addEventListener('click', () => {
+    const next = isDark() ? 'light' : 'dark';
+    if (!reduce) { root.classList.add('theme-anim'); setTimeout(() => root.classList.remove('theme-anim'), 480); }
+    root.dataset.theme = next;
+    try { localStorage.setItem('nl-theme', next); } catch (e) {}
+    labelTheme();
+    dispatchEvent(new Event('themechange'));
+  }));
+  matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', () => { labelTheme(); dispatchEvent(new Event('themechange')); });
+
+  /* Bottom sheet menu (phones) */
+  const sheet = $('#sheet'), menuTab = $('.tab-menu');
+  const openSheet = () => { sheet.hidden = false; sheet.classList.remove('closing'); menuTab?.setAttribute('aria-expanded', 'true'); document.body.style.overflow = 'hidden'; sheet.querySelector('.sheet-links a')?.focus({ preventScroll: true }); };
+  const closeSheet = () => {
+    if (sheet.hidden) return;
+    menuTab?.setAttribute('aria-expanded', 'false'); document.body.style.overflow = '';
+    if (reduce) { sheet.hidden = true; return; }
+    sheet.classList.add('closing'); setTimeout(() => { sheet.hidden = true; sheet.classList.remove('closing'); }, 250);
+  };
+  if (sheet) {
+    menuTab?.addEventListener('click', openSheet);
+    sheet.addEventListener('click', (e) => { if (e.target.closest('[data-close]') || e.target.closest('.sheet-links a, .sheet-cta')) closeSheet(); });
+    addEventListener('keydown', (e) => { if (e.key === 'Escape') closeSheet(); });
+  }
 
   /* Photos: keep the designed fallback until a real file loads */
   $$('img[data-photo]').forEach((img) => {
@@ -57,7 +102,7 @@
   const st = $('#statement');
   let words = [];
   if (st) {
-    const accent = new Set(['people.', 'family', 'career,', 'home.']);
+    const accent = new Set(RU ? ['людях.', 'семью,', 'карьеру', 'домом.'] : ['people.', 'family', 'career,', 'home.']);
     st.innerHTML = st.textContent.trim().split(/\s+/).map((w) => `<span class="w${accent.has(w) ? ' accent' : ''}">${w}</span>`).join(' ');
     words = st.querySelectorAll('.w');
   }
@@ -156,7 +201,7 @@
     svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
     if (vertical) svg.style.maxWidth = '300px';
     svg.setAttribute('role', 'img');
-    svg.setAttribute('aria-label', 'Typical path: ' + steps.map((s) => s[0]).join(', then '));
+    svg.setAttribute('aria-label', T.pathAria + steps.map((s) => s[0]).join(T.then));
     const mk = (tag, attrs) => { const n = document.createElementNS(NS, tag); for (const k in attrs) n.setAttribute(k, attrs[k]); svg.appendChild(n); return n; };
     mk('path', { d, class: 'track' });
     const run = mk('path', { d, class: 'run' });
@@ -174,7 +219,7 @@
       }
     });
     const runner = mk('circle', { r: 4.5, class: 'runner', cx: xs[0], cy: ys[0] });
-    el.innerHTML = '<p class="path-title">Typical path</p>';
+    el.innerHTML = `<p class="path-title">${T.path}</p>`;
     el.appendChild(svg);
     const len = run.getTotalLength();
     run.style.setProperty('--len', len);
@@ -261,12 +306,71 @@
       const name = form.querySelector('#f-name').value.trim().split(' ')[0].replace(/[<>&"]/g, '');
       const btn = form.querySelector('button[type=submit]');
       const done = (title, body, kicker) => { form.innerHTML = `<div class="sent" role="status"><p class="kicker">${kicker}</p><h3>${title}</h3><p>${body}</p></div>`; };
-      const offline = () => done(`Thank you, ${name}.`, 'This preview of the site cannot send messages yet. Please call the office or email office@nurtayevlaw.com and we will get back to you.', 'Preview');
-      btn.disabled = true; btn.textContent = 'Sending...';
+      const offline = () => done(T.thanks(name), T.previewBody, T.preview);
+      btn.disabled = true; btn.textContent = T.sending;
       fetch(form.getAttribute('action') || location.pathname, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(new FormData(form)).toString() })
-        .then((r) => { if (!r.ok) throw new Error(r.status); done(`Thank you, ${name}.`, 'We will call you back within one business day. If your matter is urgent, please call the office.', 'Request received'); })
+        .then((r) => { if (!r.ok) throw new Error(r.status); done(T.thanks(name), T.receivedBody, T.received); })
         .catch(offline);
     });
+  }
+
+  /* Services directory: search + category chips */
+  const grid = $('.svc-grid');
+  if (grid) {
+    const q = $('#svc-q'), chips = $$('.chip'), cats = $$('.svc-cat'), count = $('.svc-count'), empty = $('.svc-empty');
+    const total = $$('.svc-cat li').length;
+    let cat = 'all';
+    cats.forEach((c) => {
+      const n = c.querySelectorAll('li').length;
+      if (n > 3) {
+        const b = document.createElement('button');
+        b.type = 'button'; b.className = 'svc-more';
+        b.innerHTML = `<span class="lbl-more">${T.more(n)}</span><span class="lbl-less">${T.less}</span>`;
+        b.addEventListener('click', () => c.classList.toggle('open'));
+        c.appendChild(b);
+      }
+      c.querySelectorAll('.svc-name').forEach((s) => { s.dataset.t = s.textContent; });
+    });
+    const norm = (s) => s.toLowerCase().replace(/[\s\-]+/g, ' ').trim();
+    const apply = () => {
+      const term = norm(q.value || '');
+      let shown = 0;
+      cats.forEach((c) => {
+        const inCat = cat === 'all' || c.dataset.cat === cat;
+        let any = 0;
+        c.querySelectorAll('li').forEach((li) => {
+          const hit = inCat && (!term || norm(li.dataset.q).includes(term));
+          li.classList.toggle('hide', !hit);
+          const nm = li.querySelector('.svc-name');
+          if (hit && term) {
+            const t = nm.dataset.t, i = norm(t).indexOf(term);
+            nm.innerHTML = i > -1 ? t.slice(0, i).replace(/</g, '&lt;') + '<mark>' + t.slice(i, i + term.length).replace(/</g, '&lt;') + '</mark>' + t.slice(i + term.length).replace(/</g, '&lt;') : t.replace(/</g, '&lt;');
+          } else nm.textContent = nm.dataset.t;
+          if (hit) any++;
+        });
+        const was = !c.classList.contains('hide');
+        c.classList.toggle('hide', !any);
+        if (any && !was && !reduce) { c.classList.remove('pop'); void c.offsetWidth; c.classList.add('pop'); }
+        shown += any;
+      });
+      grid.classList.toggle('filtered', !!term || cat !== 'all');
+      count.textContent = T.showing(shown, total);
+      empty.hidden = shown > 0;
+    };
+    chips.forEach((ch) => ch.addEventListener('click', () => {
+      cat = ch.dataset.cat;
+      chips.forEach((c) => { const on = c === ch; c.classList.toggle('on', on); c.setAttribute('aria-pressed', on); });
+      if (matchMedia('(max-width: 760px)').matches) ch.scrollIntoView({ block: 'nearest', inline: 'center', behavior: reduce ? 'auto' : 'smooth' });
+      apply();
+      const tools = $('.svc-tools');
+      const top = grid.getBoundingClientRect().top + scrollY - tools.offsetHeight - (parseFloat(getComputedStyle(root).getPropertyValue('--hdr')) || 68) - 16;
+      if (scrollY > top) scrollTo({ top, behavior: reduce ? 'auto' : 'smooth' });
+    }));
+    q.addEventListener('input', apply);
+    apply();
+    const tools = $('.svc-tools');
+    const sentinel = document.createElement('div'); tools.before(sentinel);
+    if ('IntersectionObserver' in window) new IntersectionObserver(([e]) => tools.classList.toggle('stuck', !e.isIntersecting && e.boundingClientRect.top < 0), { rootMargin: `-${(parseFloat(getComputedStyle(root).getPropertyValue('--hdr')) || 68) + 1}px 0px 0px 0px` }).observe(sentinel);
   }
 
   /* Route-map engine shared by the world map and the borough map */
@@ -293,7 +397,10 @@
     };
     const qp = (a, t) => { const u = 1 - t; return [u*u*a.s[0] + 2*u*t*a.c[0] + t*t*a.e[0], u*u*a.s[1] + 2*u*t*a.c[1] + t*t*a.e[1]]; };
     const ease = (x) => 1 - Math.pow(1 - x, 3);
-    const G = '23,104,74', N = '13,29,54';
+    let G, N;
+    const readPal = () => { const cs = getComputedStyle(root); G = cs.getPropertyValue('--map-accent').trim() || '23,104,74'; N = cs.getPropertyValue('--map-ink').trim() || '13,29,54'; };
+    readPal();
+    addEventListener('themechange', () => { readPal(); if (reduce || !visible) draw(performance.now()); });
     const draw = (now) => {
       const time = (now - t0) / 1000;
       ctx.clearRect(0, 0, W, H);
@@ -329,7 +436,7 @@
       ctx.strokeStyle = `rgba(${G},${(0.7 * (1 - pulse)).toFixed(3)})`; ctx.lineWidth = 1.2;
       ctx.beginPath(); ctx.arc(nx, ny, 6 + pulse * 22, 0, Math.PI * 2); ctx.stroke();
       ctx.fillStyle = `rgb(${G})`; ctx.beginPath(); ctx.arc(nx, ny, 5.5, 0, Math.PI * 2); ctx.fill();
-      ctx.fillStyle = '#fbfcfb'; ctx.beginPath(); ctx.arc(nx, ny, 2, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = getComputedStyle(root).getPropertyValue('--map-bg').trim() || '#fbfcfb'; ctx.beginPath(); ctx.arc(nx, ny, 2, 0, Math.PI * 2); ctx.fill();
       ctx.font = '600 12px "Geist Mono", ui-monospace, monospace'; ctx.textAlign = 'left';
       ctx.fillStyle = `rgb(${N})`; ctx.fillText(opts.label, nx + 12, ny - 10);
       if (visible && !reduce) requestAnimationFrame(draw);
@@ -349,22 +456,23 @@
 
   const manhattan = [[-74.018,40.700],[-74.012,40.712],[-74.010,40.735],[-74.003,40.758],[-73.990,40.775],[-73.972,40.800],[-73.958,40.820],[-73.945,40.835],[-73.930,40.855],[-73.910,40.873],[-73.928,40.877],[-73.934,40.862],[-73.946,40.840],[-73.932,40.804],[-73.943,40.778],[-73.958,40.758],[-73.970,40.742],[-73.973,40.726],[-73.977,40.710],[-73.998,40.708],[-74.018,40.700]];
   routeMap($('#boroughs'), {
-    target: [-73.9839, 40.7457], label: '136 Madison Ave', bend: 0.22, stagger: 0.9, cycle: 6,
+    target: [-73.9839, 40.7457], label: RU ? '136 Мэдисон-авеню' : '136 Madison Ave', bend: 0.22, stagger: 0.9, cycle: 6,
     view: (W, H) => {
       const cx = -73.985, cy = 40.74, latSpan = 0.40, lonSpan = latSpan * (W / H) * 1.32;
       return { lon0: cx - lonSpan / 2, lon1: cx + lonSpan / 2, lat0: cy - latSpan / 2, lat1: cy + latSpan / 2 };
     },
-    sources: [{ n: 'Bronx', c: [-73.865, 40.845] }, { n: 'Queens', c: [-73.80, 40.725] }, { n: 'Brooklyn', c: [-73.950, 40.650] }, { n: 'Staten Island', c: [-74.130, 40.585] }, { n: 'Jersey City', c: [-74.077, 40.718] }, { n: 'Newark', c: [-74.172, 40.735] }, { n: 'Yonkers', c: [-73.899, 40.912] }, { n: 'Long Island', c: [-73.735, 40.770] }],
+    sources: (RU ? ['Бронкс', 'Куинс', 'Бруклин', 'Статен-Айленд', 'Джерси-Сити', 'Ньюарк', 'Йонкерс', 'Лонг-Айленд'] : ['Bronx', 'Queens', 'Brooklyn', 'Staten Island', 'Jersey City', 'Newark', 'Yonkers', 'Long Island']).map((n, i) => ({ n, c: [[-73.865, 40.845], [-73.80, 40.725], [-73.950, 40.650], [-74.130, 40.585], [-74.077, 40.718], [-74.172, 40.735], [-73.899, 40.912], [-73.735, 40.770]][i] })),
     under: (ctx, proj) => {
       ctx.beginPath();
       manhattan.forEach((pt, i) => { const [x, y] = proj(pt); i ? ctx.lineTo(x, y) : ctx.moveTo(x, y); });
       ctx.closePath();
-      ctx.fillStyle = 'rgba(23,104,74,0.12)'; ctx.fill();
-      ctx.strokeStyle = 'rgba(23,104,74,0.4)'; ctx.lineWidth = 1; ctx.stroke();
+      const cs = getComputedStyle(root), A = cs.getPropertyValue('--map-accent').trim(), I = cs.getPropertyValue('--map-ink').trim();
+      ctx.fillStyle = `rgba(${A},0.14)`; ctx.fill();
+      ctx.strokeStyle = `rgba(${A},0.45)`; ctx.lineWidth = 1; ctx.stroke();
       const [lx, ly] = proj([-74.0445, 40.6892]);
-      ctx.fillStyle = 'rgba(13,29,54,0.6)'; ctx.beginPath(); ctx.arc(lx, ly, 2.6, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = `rgba(${I},0.6)`; ctx.beginPath(); ctx.arc(lx, ly, 2.6, 0, Math.PI * 2); ctx.fill();
       ctx.font = '400 10px "Geist Mono", ui-monospace, monospace'; ctx.textAlign = 'right';
-      ctx.fillText('Statue of Liberty', lx - 6, ly + 13);
+      ctx.fillText(RU ? 'Статуя Свободы' : 'Statue of Liberty', lx - 6, ly + 13);
     }
   });
 })();
