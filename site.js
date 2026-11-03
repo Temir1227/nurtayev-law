@@ -272,7 +272,12 @@
     const openFromHash = () => {
       const h = location.hash.slice(1);
       const tab = h && document.getElementById('t-' + h);
-      if (tab) { select(tab, false, false); document.getElementById('practice')?.scrollIntoView({ behavior: 'auto' }); return true; }
+      if (tab) {
+        select(tab, false, false);
+        const ul = tab.closest('.pa-list'); if (ul) ul.scrollLeft = tab.parentElement.offsetLeft - 16;
+        document.getElementById('practice')?.scrollIntoView({ behavior: 'auto' });
+        return true;
+      }
       return false;
     };
     if (!openFromHash()) {

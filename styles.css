@@ -736,3 +736,14 @@ mark { background: color-mix(in oklab, var(--green) 22%, transparent); color: in
 .brand:hover .brand-mark { transform: translateY(-1px) rotate(-3deg); }
 .brand-mark { transition: transform 500ms var(--ease-out); }
 @media (max-width: 760px) { .brand-mark { width: 36px; height: 36px; } }
+/* Phone polish: comfortable header targets, buttons that never overflow */
+@media (max-width: 760px) {
+  :root { --hdr: 64px; }
+  .lang { padding: 3px; }
+  .lang a { min-width: 42px; height: 40px; font-size: 13px; }
+  .theme-btn { width: 44px; height: 44px; }
+  .brand { min-height: 44px; }
+  .btn { white-space: normal; text-align: center; line-height: 1.2; padding-block: 12px; }
+  .cta-copy { max-width: 100%; }
+  .cta-copy .btn { width: 100%; }
+}
