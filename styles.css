@@ -131,7 +131,7 @@ img { display: block; max-width: 100%; }
 .map-cap { position: absolute; left: 20px; right: 20px; bottom: 16px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; font: 400 12px/1.4 var(--f-mono); color: var(--ink-2); pointer-events: none; margin: 0; }
 @media (max-width: 640px) { .journeys { aspect-ratio: 1.1 / 1; } }
 
-.facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; padding-top: 28px; }
+.facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; padding-top: clamp(40px, 6vw, 72px); }
 .facts div { display: grid; gap: 4px; padding-top: 16px; border-top: 1px solid var(--line); }
 .facts strong { font-weight: 500; }
 .facts span { color: var(--ink-2); font-size: 15px; }
