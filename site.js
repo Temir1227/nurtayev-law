@@ -23,7 +23,7 @@
   };
 
   /* Light / dark mode */
-  const isDark = () => root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+  const isDark = () => root.dataset.theme === 'dark';
   const labelTheme = () => $$('.theme-btn').forEach((b) => { b.setAttribute('aria-label', isDark() ? T.toLight : T.toDark); b.setAttribute('aria-pressed', isDark()); });
   labelTheme();
   $$('.theme-btn').forEach((b) => b.addEventListener('click', () => {
@@ -34,7 +34,6 @@
     labelTheme();
     dispatchEvent(new Event('themechange'));
   }));
-  matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', () => { labelTheme(); dispatchEvent(new Event('themechange')); });
 
   /* Bottom sheet menu (phones) */
   const sheet = $('#sheet'), menuTab = $('.tab-menu');
@@ -371,6 +370,18 @@
     const tools = $('.svc-tools');
     const sentinel = document.createElement('div'); tools.before(sentinel);
     if ('IntersectionObserver' in window) new IntersectionObserver(([e]) => tools.classList.toggle('stuck', !e.isIntersecting && e.boundingClientRect.top < 0), { rootMargin: `-${(parseFloat(getComputedStyle(root).getPropertyValue('--hdr')) || 68) + 1}px 0px 0px 0px` }).observe(sentinel);
+  }
+
+  /* Services page: highlight the category in view */
+  const spy = $$('.sv-index a');
+  if (spy.length && 'IntersectionObserver' in window) {
+    const setOn = (id) => spy.forEach((a) => {
+      const on = a.dataset.spy === id; a.classList.toggle('on', on);
+      if (on && matchMedia('(max-width: 860px)').matches) { const ul = a.closest('ul'); ul.scrollTo({ left: a.offsetLeft - 16, behavior: reduce ? 'auto' : 'smooth' }); }
+    });
+    const io2 = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) setOn(e.target.id); }), { rootMargin: '-35% 0px -60% 0px' });
+    $$('.sv-group').forEach((g) => io2.observe(g));
+    setOn(spy[0].dataset.spy);
   }
 
   /* Route-map engine shared by the world map and the borough map */
