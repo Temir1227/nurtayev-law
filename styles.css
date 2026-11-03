@@ -717,3 +717,14 @@ mark { background: color-mix(in oklab, var(--green) 22%, transparent); color: in
   .band-cats a { white-space: nowrap; }
   .band-head .btn { width: 100%; }
 }
+
+/* Contact: office photo instead of the map */
+.office-photo { margin: 0; aspect-ratio: 16 / 11; border-radius: var(--r); max-width: 100%; }
+.office-photo img { object-position: 50% 40%; transform: scale(var(--os, 1.08)); transition: transform 1600ms var(--ease-out); }
+.office-photo.in img, .office-photo:hover img { --os: 1.02; }
+.office-photo figcaption { position: absolute; left: 14px; right: 14px; bottom: 14px; display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 12px; background: var(--glass); -webkit-backdrop-filter: blur(14px) saturate(160%); backdrop-filter: blur(14px) saturate(160%); }
+.office-photo figcaption span:last-child { display: grid; gap: 2px; font-size: 13px; color: var(--ink-2); line-height: 1.35; }
+.office-photo figcaption b { font-size: 15px; font-weight: 600; color: var(--ink); letter-spacing: -0.01em; }
+.oc-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--green); flex: none; box-shadow: 0 0 0 0 color-mix(in oklab, var(--green) 45%, transparent); animation: ping 2.4s var(--ease-out) infinite; }
+@keyframes ping { 70% { box-shadow: 0 0 0 10px transparent; } 100% { box-shadow: 0 0 0 0 transparent; } }
+@media (max-width: 760px) { .office-photo { aspect-ratio: 4 / 3.2; } }

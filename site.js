@@ -372,6 +372,13 @@
     if ('IntersectionObserver' in window) new IntersectionObserver(([e]) => tools.classList.toggle('stuck', !e.isIntersecting && e.boundingClientRect.top < 0), { rootMargin: `-${(parseFloat(getComputedStyle(root).getPropertyValue('--hdr')) || 68) + 1}px 0px 0px 0px` }).observe(sentinel);
   }
 
+  /* Contact: office photo settles in when it scrolls into view */
+  const op = $('#office-photo');
+  if (op && !reduce && 'IntersectionObserver' in window) {
+    const oio = new IntersectionObserver(([e]) => { if (e.isIntersecting) { op.classList.add('in'); oio.disconnect(); } }, { threshold: 0.3 });
+    oio.observe(op);
+  } else op?.classList.add('in');
+
   /* Services page: highlight the category in view */
   const spy = $$('.sv-index a');
   if (spy.length && 'IntersectionObserver' in window) {
