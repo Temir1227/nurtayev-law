@@ -10,14 +10,14 @@
     path: 'Обычный путь дела', pathAria: 'Обычный путь: ', then: ', затем ',
     sending: 'Отправка...', thanks: (n) => `Спасибо, ${n}.`,
     received: 'Заявка получена', receivedBody: 'Мы перезвоним в течение одного рабочего дня. Если вопрос срочный, позвоните в офис.',
-    preview: 'Предпросмотр', previewBody: 'Эта версия сайта пока не отправляет сообщения. Позвоните в офис по номеру (609) 608-8808 или напишите на office@nurtayevlaw.com.',
+    preview: 'Предпросмотр', failed: 'Не удалось отправить заявку. Пожалуйста, позвоните по номеру (609) 608-8808 или напишите на office@nurtayevlaw.com.', previewBody: 'Эта версия сайта пока не отправляет сообщения. Позвоните в офис по номеру (609) 608-8808 или напишите на office@nurtayevlaw.com.',
     showing: (n, t) => n === t ? `Все ${t} услуг` : `Найдено: ${n} из ${t}`, more: (n) => `Показать все ${n}`, less: 'Свернуть',
     toDark: 'Включить тёмную тему', toLight: 'Включить светлую тему'
   } : {
     path: 'Typical path', pathAria: 'Typical path: ', then: ', then ',
     sending: 'Sending...', thanks: (n) => `Thank you, ${n}.`,
     received: 'Request received', receivedBody: 'We will call you back within one business day. If your matter is urgent, please call the office.',
-    preview: 'Preview', previewBody: 'This preview of the site cannot send messages yet. Please call the office at (609) 608-8808 or email office@nurtayevlaw.com.',
+    preview: 'Preview', failed: 'Your request did not go through. Please call (609) 608-8808 or email office@nurtayevlaw.com.', previewBody: 'This preview of the site cannot send messages yet. Please call the office at (609) 608-8808 or email office@nurtayevlaw.com.',
     showing: (n, t) => n === t ? `All ${t} services` : `Showing ${n} of ${t} services`, more: (n) => `Show all ${n}`, less: 'Show less',
     toDark: 'Switch to dark mode', toLight: 'Switch to light mode'
   };
@@ -302,6 +302,9 @@
       return !bad;
     };
     form.querySelectorAll('[required]').forEach((i) => i.addEventListener('blur', () => check(i)));
+    const btnEl = form.querySelector('button[type=submit]'), btnHtml = btnEl.innerHTML;
+    const status = document.createElement('p'); status.className = 'form-error'; status.setAttribute('role', 'alert'); status.hidden = true;
+    btnEl.after(status);
     form.addEventListener('submit', (e) => {
       e.preventDefault();
       const req = [...form.querySelectorAll('[required]')];
@@ -309,11 +312,14 @@
       const name = form.querySelector('#f-name').value.trim().split(' ')[0].replace(/[<>&"]/g, '');
       const btn = form.querySelector('button[type=submit]');
       const done = (title, body, kicker) => { form.innerHTML = `<div class="sent" role="status"><p class="kicker">${kicker}</p><h3>${title}</h3><p>${body}</p></div>`; };
-      const offline = () => done(T.thanks(name), T.previewBody, T.preview);
+      const action = form.getAttribute('action');
+      if (!action) { done(T.thanks(name), T.previewBody, T.preview); return; }
       btn.disabled = true; btn.textContent = T.sending;
-      fetch(form.getAttribute('action') || location.pathname, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(new FormData(form)).toString() })
+      const fail = () => { btn.disabled = false; btn.innerHTML = btnHtml; status.hidden = false; status.textContent = T.failed; };
+      status.hidden = true;
+      fetch(action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } })
         .then((r) => { if (!r.ok) throw new Error(r.status); done(T.thanks(name), T.receivedBody, T.received); })
-        .catch(offline);
+        .catch(fail);
     });
   }
 

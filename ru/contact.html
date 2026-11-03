@@ -66,16 +66,17 @@
         </dl>
       </div>
 
-      <form class="consult rv rv-d1" id="consult" name="consultation" method="POST" data-netlify="true" netlify-honeypot="company" novalidate>
-        <input type="hidden" name="form-name" value="consultation">
-        <p hidden><label>Leave empty <input name="company"></label></p>
+      <form class="consult rv rv-d1" id="consult" method="POST" novalidate>
+        <input type="hidden" name="_subject" value="Новая заявка на консультацию с сайта (русская версия)">
+        <input type="hidden" name="site_language" value="Russian">
+        <p hidden><label>Leave empty <input name="_gotcha" tabindex="-1" autocomplete="off"></label></p>
         <div class="row2">
           <div class="field"><label for="f-name">Имя и фамилия</label><input id="f-name" name="name" autocomplete="name" required placeholder="Ваше имя"><span class="err" hidden>Пожалуйста, укажите имя.</span></div>
           <div class="field"><label for="f-phone">Телефон</label><input id="f-phone" name="phone" type="tel" autocomplete="tel" required placeholder="(212) 555-0100"><span class="err" hidden>Пожалуйста, укажите номер, по которому можно позвонить.</span></div>
         </div>
         <div class="row2">
           <div class="field"><label for="f-email">Эл. почта (необязательно)</label><input id="f-email" name="email" type="email" autocomplete="email" placeholder="you@email.com"></div>
-          <div class="field"><label for="f-lang">Удобный язык</label><select id="f-lang" name="lang"><option>English (английский)</option><option>Русский</option><option>Қазақша (казахский)</option><option>Другой (укажите ниже)</option></select></div>
+          <div class="field"><label for="f-lang">Удобный язык</label><select id="f-lang" name="lang"><option>English (английский)</option><option selected>Русский</option><option>Қазақша (казахский)</option><option>Другой (укажите ниже)</option></select></div>
         </div>
         <div class="field"><label for="f-topic">С чем вам помочь?</label>
           <select id="f-topic" name="topic"><option>Семья или грин-карта</option><option>Гражданство</option><option>Рабочая виза</option><option>Депортация или суд</option><option>Убежище</option><option>DACA или TPS</option><option>Прощение (waiver)</option><option>Пока не знаю</option></select></div>

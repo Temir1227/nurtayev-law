@@ -774,3 +774,4 @@ mark { background: color-mix(in oklab, var(--green) 22%, transparent); color: in
   .page-hero.has-photo .ph-grid { grid-template-columns: 1fr; }
   .page-hero .office-photo figcaption { left: 10px; right: 10px; bottom: 10px; padding: 10px 12px; }
 }
+.form-error { color: var(--err); font-size: 14px; margin-top: -6px; }

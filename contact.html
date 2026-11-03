@@ -66,9 +66,10 @@
         </dl>
       </div>
 
-      <form class="consult rv rv-d1" id="consult" name="consultation" method="POST" data-netlify="true" netlify-honeypot="company" novalidate>
-        <input type="hidden" name="form-name" value="consultation">
-        <p hidden><label>Leave empty <input name="company"></label></p>
+      <form class="consult rv rv-d1" id="consult" method="POST" novalidate>
+        <input type="hidden" name="_subject" value="New consultation request from the website">
+        <input type="hidden" name="site_language" value="English">
+        <p hidden><label>Leave empty <input name="_gotcha" tabindex="-1" autocomplete="off"></label></p>
         <div class="row2">
           <div class="field"><label for="f-name">Full name</label><input id="f-name" name="name" autocomplete="name" required placeholder="Your name"><span class="err" hidden>Please enter your name.</span></div>
           <div class="field"><label for="f-phone">Phone</label><input id="f-phone" name="phone" type="tel" autocomplete="tel" required placeholder="(212) 555-0100"><span class="err" hidden>Please enter a phone number we can call.</span></div>
