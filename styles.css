@@ -671,3 +671,6 @@ mark { background: color-mix(in oklab, var(--green) 22%, transparent); color: in
   footer { padding-bottom: 40px; }
 }
 @media (max-width: 760px) { .boroughs .map-cap { display: none; } }
+.brand-name, .brand-sub, .nav-links a { white-space: nowrap; }
+@media (max-width: 1240px) { .nav-phone { display: none; } .nav-links { gap: 20px; } }
+@media (max-width: 1080px) { .nav-links { gap: 14px; } .nav-links a { font-size: 14px; } }
