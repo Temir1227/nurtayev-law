@@ -799,3 +799,12 @@ mark { background: color-mix(in oklab, var(--green) 22%, transparent); color: in
 .faq-close-act { display: grid; gap: 14px; justify-items: start; }
 .faq-line { font: 400 13px/1.5 var(--f-mono); color: var(--muted) !important; }
 @media (max-width: 760px) { .faq .ans { padding-right: 0; } .faq-close { grid-template-columns: 1fr; } .faq-close-act .btn { width: 100%; } }
+/* Statement v2 + city band copy */
+.statement p#statement { font-size: clamp(28px, 4vw, 52px); max-width: 26ch; }
+.statement-sub { margin-top: clamp(28px, 4vw, 44px); max-width: 60ch; font-size: clamp(17px, 1.6vw, 20px); color: var(--ink-2); line-height: 1.6; }
+.city-copy h2 { font-size: clamp(32px, 4.4vw, 60px); max-width: 20ch; }
+.city-copy p { max-width: 56ch; }
+.city-copy p + p { margin-top: 10px; }
+@media (max-width: 760px) { .city-copy h2 { font-size: 30px; } .city-copy p { font-size: 15.5px; } }
+.statement .statement-sub { font-size: clamp(17px, 1.6vw, 20px); font-weight: 400; letter-spacing: -0.006em; line-height: 1.6; max-width: 60ch; color: var(--ink-2); }
+.city-copy { width: 100%; }

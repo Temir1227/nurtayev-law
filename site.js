@@ -101,7 +101,7 @@
   const st = $('#statement');
   let words = [];
   if (st) {
-    const accent = new Set(RU ? ['людях.', 'семью,', 'карьеру', 'домом.'] : ['people.', 'family', 'career,', 'home.']);
+    const accent = new Set(RU ? ['людях.', 'историей,', 'семьёй', 'будущим,'] : ['people.', 'story,', 'family,', 'future']);
     st.innerHTML = st.textContent.trim().split(/\s+/).map((w) => `<span class="w${accent.has(w) ? ' accent' : ''}">${w}</span>`).join(' ');
     words = st.querySelectorAll('.w');
   }
