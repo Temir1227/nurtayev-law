@@ -287,6 +287,15 @@
       }
     }
     addEventListener('hashchange', openFromHash);
+    // links on the same page that point at a topic (e.g. #asylum) open that tab even if the hash is unchanged
+    document.addEventListener('click', (e) => {
+      const a = e.target.closest('a[href^="#"]'); if (!a) return;
+      const id = a.getAttribute('href').slice(1);
+      if (!document.getElementById('t-' + id)) return;
+      e.preventDefault();
+      history.replaceState(null, '', '#' + id);
+      openFromHash();
+    });
     let rzp; addEventListener('resize', () => { clearTimeout(rzp); rzp = setTimeout(() => $$('.path').forEach((el) => buildPath(el).runner.remove()), 200); });
   }
 
