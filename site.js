@@ -299,6 +299,31 @@
     let rzp; addEventListener('resize', () => { clearTimeout(rzp); rzp = setTimeout(() => $$('.path').forEach((el) => buildPath(el).runner.remove()), 200); });
   }
 
+  /* Services sections: draw each typical path, animate it when it scrolls into view */
+  if (!tabs.length && $$('.path').length) {
+    $$('.path').forEach((el) => buildPath(el).runner.remove());
+    if (!reduce && 'IntersectionObserver' in window) {
+      const pio2 = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { animatePath(e.target.closest('.cat') || e.target.parentElement); pio2.unobserve(e.target); } }), { threshold: 0.5 });
+      $$('.path').forEach((el) => pio2.observe(el));
+    }
+    let rz3; addEventListener('resize', () => { clearTimeout(rz3); rz3 = setTimeout(() => $$('.path').forEach((el) => buildPath(el).runner.remove()), 200); });
+  }
+  /* Category bar: highlight the section in view; old topic links map to sections */
+  const catLinks = $$('.cat-bar a');
+  if (catLinks.length) {
+    const old = { family: 'all-family', work: 'all-work', citizen: 'all-citizen', asylum: 'all-humanitarian', daca: 'all-humanitarian', removal: 'all-court', waiver: 'all-court' };
+    const h = location.hash.slice(1);
+    if (old[h]) { history.replaceState(null, '', '#' + old[h]); requestAnimationFrame(() => document.getElementById(old[h])?.scrollIntoView()); }
+    const setOn = (id) => catLinks.forEach((a) => {
+      const on = a.dataset.spy === id; a.classList.toggle('on', on);
+      if (on) { const row = a.parentElement; row.scrollTo({ left: a.offsetLeft - row.clientWidth / 2 + a.clientWidth / 2, behavior: reduce ? 'auto' : 'smooth' }); }
+    });
+    if ('IntersectionObserver' in window) {
+      const io3 = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) setOn(e.target.id); }), { rootMargin: '-40% 0px -55% 0px' });
+      $$('[data-spy-target]').forEach((s) => io3.observe(s));
+    }
+  }
+
   /* Consultation form */
   const form = $('#consult');
   if (form) {
@@ -391,6 +416,7 @@
     if ('IntersectionObserver' in window) new IntersectionObserver(([e]) => tools.classList.toggle('stuck', !e.isIntersecting && e.boundingClientRect.top < 0), { rootMargin: `-${(parseFloat(getComputedStyle(root).getPropertyValue('--hdr')) || 68) + 1}px 0px 0px 0px` }).observe(sentinel);
   }
 
+  $$('.cat-photo').forEach((f) => { if (reduce || !('IntersectionObserver' in window)) { f.classList.add('in'); return; } const o = new IntersectionObserver(([e]) => { if (e.isIntersecting) { f.classList.add('in'); o.disconnect(); } }, { threshold: 0.25 }); o.observe(f); });
   /* Contact: office photo settles in when it scrolls into view */
   const op = $('#office-photo');
   if (op && !reduce && 'IntersectionObserver' in window) {
