@@ -788,3 +788,14 @@ mark { background: color-mix(in oklab, var(--green) 22%, transparent); color: in
 .about-photo { position: sticky; top: calc(var(--hdr) + 24px); }
 .creds-big { align-items: start; }
 @media (max-width: 860px) { .about-photo { position: static; } }
+
+/* FAQ v2: multi-paragraph answers and closing call to action */
+.faq .ans { padding: 0 52px 26px 0; display: grid; gap: 12px; }
+.faq .ans p { color: var(--ink-2); max-width: 66ch; }
+.faq-close { margin-top: clamp(48px, 7vw, 88px); padding: clamp(28px, 4vw, 48px); border-radius: var(--r); background: var(--surface); box-shadow: var(--shadow); display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr); gap: clamp(24px, 4vw, 56px); align-items: center; }
+.faq-close h2 { font-size: clamp(26px, 3vw, 38px); margin-bottom: 14px; }
+.faq-close p { color: var(--ink-2); max-width: 60ch; }
+.faq-close p + p { margin-top: 10px; }
+.faq-close-act { display: grid; gap: 14px; justify-items: start; }
+.faq-line { font: 400 13px/1.5 var(--f-mono); color: var(--muted) !important; }
+@media (max-width: 760px) { .faq .ans { padding-right: 0; } .faq-close { grid-template-columns: 1fr; } .faq-close-act .btn { width: 100%; } }

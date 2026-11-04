@@ -9,14 +9,14 @@
   const T = RU ? {
     path: 'Обычный путь дела', pathAria: 'Обычный путь: ', then: ', затем ',
     sending: 'Отправка...', thanks: (n) => `Спасибо, ${n}.`,
-    received: 'Заявка получена', receivedBody: 'Мы перезвоним в течение одного рабочего дня. Если вопрос срочный, позвоните в офис.',
+    received: 'Запрос получен', thanksFirm: 'Спасибо, что обратились в Nurtayev Law P.C.', receivedBody: 'Мы получили ваш запрос и свяжемся с вами удобным для вас способом.',
     preview: 'Предпросмотр', failed: 'Не удалось отправить заявку. Пожалуйста, позвоните по номеру (609) 608-8808 или напишите на office@nurtayevlaw.com.', previewBody: 'Эта версия сайта пока не отправляет сообщения. Позвоните в офис по номеру (609) 608-8808 или напишите на office@nurtayevlaw.com.',
     showing: (n, t) => n === t ? `Все ${t} услуг` : `Найдено: ${n} из ${t}`, more: (n) => `Показать все ${n}`, less: 'Свернуть',
     toDark: 'Включить тёмную тему', toLight: 'Включить светлую тему'
   } : {
     path: 'Typical path', pathAria: 'Typical path: ', then: ', then ',
     sending: 'Sending...', thanks: (n) => `Thank you, ${n}.`,
-    received: 'Request received', receivedBody: 'We will call you back within one business day. If your matter is urgent, please call the office.',
+    received: 'Inquiry received', thanksFirm: 'Thank you for contacting Nurtayev Law P.C.', receivedBody: 'We have received your inquiry and will contact you using your preferred method.',
     preview: 'Preview', failed: 'Your request did not go through. Please call (609) 608-8808 or email office@nurtayevlaw.com.', previewBody: 'This preview of the site cannot send messages yet. Please call the office at (609) 608-8808 or email office@nurtayevlaw.com.',
     showing: (n, t) => n === t ? `All ${t} services` : `Showing ${n} of ${t} services`, more: (n) => `Show all ${n}`, less: 'Show less',
     toDark: 'Switch to dark mode', toLight: 'Switch to light mode'
@@ -327,7 +327,7 @@
       const fail = () => { btn.disabled = false; btn.innerHTML = btnHtml; status.hidden = false; status.textContent = T.failed; };
       status.hidden = true;
       fetch(action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } })
-        .then((r) => { if (!r.ok) throw new Error(r.status); done(T.thanks(name), T.receivedBody, T.received); })
+        .then((r) => { if (!r.ok) throw new Error(r.status); done(T.thanksFirm, T.receivedBody, T.received); })
         .catch(fail);
     });
   }
