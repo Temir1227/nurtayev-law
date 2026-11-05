@@ -866,3 +866,10 @@ mark { background: color-mix(in oklab, var(--green) 22%, transparent); color: in
   .cat-more { display: inline-flex; justify-self: start; align-items: center; min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1px solid var(--line-2); background: var(--surface); color: var(--ink); font: 500 15px/1 var(--f-sans); cursor: pointer; }
   .cat-more:active { transform: scale(0.97); }
 }
+
+/* Key sentence: quiet pull-line with an accent rule that draws in */
+p.key-line.key-line { position: relative; padding: 4px 0 4px 22px; margin-block: 10px; color: var(--ink); font-size: 1.12em; font-weight: 500; line-height: 1.5; letter-spacing: -0.012em; }
+.key-line::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; border-radius: 2px; background: linear-gradient(var(--green), var(--navy, var(--ink))); transform: scaleY(0); transform-origin: top; transition: transform .9s cubic-bezier(.2,.7,.2,1) .15s; }
+.key-line.in::before, .no-js .key-line::before { transform: scaleY(1); }
+@media (prefers-reduced-motion: reduce) { .key-line::before { transform: none; transition: none; } }
+@media (max-width: 760px) { .key-line { padding-left: 16px; font-size: 1.06em; } }
