@@ -873,3 +873,12 @@ p.key-line.key-line { position: relative; padding: 4px 0 4px 22px; margin-block:
 .key-line.in::before, .no-js .key-line::before { transform: scaleY(1); }
 @media (prefers-reduced-motion: reduce) { .key-line::before { transform: none; transition: none; } }
 @media (max-width: 760px) { .key-line { padding-left: 16px; font-size: 1.06em; } }
+
+/* Social links */
+.socials { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+footer .socials { margin-top: 18px; }
+.soc { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-width: 44px; height: 44px; border-radius: 999px; border: 1px solid var(--line); color: var(--ink-2); text-decoration: none; transition: color .2s, border-color .2s, background .2s, transform .2s; }
+.soc-l { padding: 0 16px 0 13px; font-size: 14.5px; }
+.soc:hover { color: var(--green); border-color: var(--green); transform: translateY(-1px); }
+.contact-lines .socials { gap: 8px; }
+.contact-lines .soc-l { height: 38px; }
