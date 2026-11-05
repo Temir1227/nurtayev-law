@@ -839,3 +839,21 @@ mark { background: color-mix(in oklab, var(--green) 22%, transparent); color: in
   .cat { padding-block: 40px; scroll-margin-top: calc(var(--hdr) + 60px); }
   .cat-bar { margin-inline: 0; }
 }
+
+/* ===== Round: dad's Nov 3 texts ===== */
+.pro-sub { font-size: clamp(20px, 2vw, 26px); letter-spacing: -0.02em; line-height: 1.25; font-weight: 600; color: var(--ink); max-width: 30ch; }
+.pro-text { display: grid; gap: 12px; color: var(--ink-2); font-size: 16.5px; max-width: 60ch; }
+.band-lede { color: var(--ink-2); font-size: clamp(16px, 1.5vw, 19px); max-width: 62ch; }
+.band-head h2 { max-width: 22ch; }
+.ph-more { display: grid; gap: 12px; color: var(--ink-2); max-width: 60ch; font-size: 16.5px; margin-top: 4px; }
+.cat-tagline { font-size: clamp(18px, 1.7vw, 21px); font-weight: 500; letter-spacing: -0.015em; color: var(--ink); line-height: 1.4; }
+.cat-text { display: grid; gap: 14px; }
+.cat-text p { color: var(--ink-2); font-size: 16.5px; max-width: 62ch; }
+.cat-grid { align-items: start; }
+.cat-photo { position: sticky; top: calc(var(--hdr) + 80px); }
+.sv-close { padding-block: 0 clamp(64px, 9vw, 120px); }
+.sv-close .faq-close { margin-top: 0; }
+.dd-row { display: block; }
+.dd-row + .dd-row { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--line); }
+@media (max-width: 860px) { .cat-photo { position: static; } }
+@media (max-width: 760px) { .pro-info .pro-sub { order: 0; } .pro-text { font-size: 16px; } }
