@@ -308,6 +308,22 @@
     }
     let rz3; addEventListener('resize', () => { clearTimeout(rz3); rz3 = setTimeout(() => $$('.path').forEach((el) => buildPath(el).runner.remove()), 200); });
   }
+  /* Services on phones: show the first 2 paragraphs of each category, with Read more */
+  $$('.cat-text').forEach((box) => {
+    if (box.querySelectorAll('p').length <= 2) return;
+    box.classList.add('collapsed');
+    const btn = document.createElement('button');
+    btn.type = 'button'; btn.className = 'cat-more'; btn.setAttribute('aria-expanded', 'false');
+    btn.textContent = RU ? 'Читать далее' : 'Read more';
+    btn.addEventListener('click', () => {
+      const open = box.classList.toggle('collapsed') === false;
+      btn.setAttribute('aria-expanded', open);
+      btn.textContent = open ? (RU ? 'Свернуть' : 'Show less') : (RU ? 'Читать далее' : 'Read more');
+      if (!open) box.closest('.cat')?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
+    });
+    box.after(btn);
+  });
+
   /* Category bar: highlight the section in view; old topic links map to sections */
   const catLinks = $$('.cat-bar a');
   if (catLinks.length) {
